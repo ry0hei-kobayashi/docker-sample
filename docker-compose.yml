@@ -1,0 +1,23 @@
+version: '3'
+services:
+  nvidia-sample:
+    image: nvidia-sample:gpu
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+     - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      DISPLAY: $DISPLAY
+    network_mode: host
+
+    #nvidia-docker2 setting
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    command: nvidia-smi -l 1
