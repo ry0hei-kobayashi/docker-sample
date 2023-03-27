@@ -1,17 +1,18 @@
 version: '3'
 services:
   nvidia-sample:
-    image: nvidia-sample:gpu
+    image: nvidia:cuda
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
      - /tmp/.X11-unix:/tmp/.X11-unix
+     #please change path, if your directory is different.
     environment:
       DISPLAY: $DISPLAY
+    working_dir: /workspace
     network_mode: host
 
-    #nvidia-docker2 setting
     deploy:
       resources:
         reservations:

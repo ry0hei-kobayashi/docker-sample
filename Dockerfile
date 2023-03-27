@@ -6,33 +6,36 @@
 #-----------------------------
 FROM nvidia/cuda:11.5.2-cudnn8-devel-ubuntu20.04
 
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+
+
 #-----------------------------
-# Environment Variables
+# setiing environment 
 #-----------------------------
 ENV LC_ALL=C.UTF-8
 ENV export LANG=C.UTF-8
 ENV SHELL /bin/bash
-# no need input key
 ENV DEBCONF_NOWARNINGS=yes
 ENV DEBIAN_FRONTEND noninteractive
-# for display
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+
+
 
 #-----------------------------
 # install apt package
 #-----------------------------
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+    python3-dev \
+    python3-pip \
+    python-is-python3 \
     git \
-    vim\
+    vim \
     curl \
     screen \
     g++ \
     wget \
-    net-tools \
-    software-properties-common 
-
+    net-tools 
 
 #######################################################################
 #                       install display settings                         
@@ -44,7 +47,7 @@ RUN apt-get install -y --no-install-recommends \
     libxext-dev \
     libx11-dev \
     mesa-utils \
-    x11-apps \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    x11-apps
+
+
 
